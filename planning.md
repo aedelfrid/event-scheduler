@@ -57,15 +57,15 @@ THEN the saved events persist
 ## Pseudocode
 
 var eventText = {
-    12am
-    1am
-    2am
-    3am
-    4am
-    5am
-    6am
-    7am
-    8am
+    12am: '';
+    1am: '';
+    2am: '';
+    3am: '';
+    4am: '';
+    5am: '';
+    6am: '';
+    7am: '';
+    8am: '';
     9am: '';
     10am: '';
     11am: '';
@@ -75,12 +75,12 @@ var eventText = {
     3pm: '';
     4pm: '';
     5pm: '';
-    6pm
-    7pm
-    8pm
-    9pm
-    10pm
-    11pm
+    6pm: '';
+    7pm: '';
+    8pm: '';
+    9pm: '';
+    10pm: '';
+    11pm: '';
 }
 
 ### dayjs get day to display at top
@@ -120,10 +120,10 @@ for (i=0; i > keys(eventText).length; i++) {
 
 ### create event listener for saving text in slots
 
-on.click.function(e) {
+saveButton.on('click'.function(e) {
     dialog.areYouSure?
     e.parent().text.push.JSON
-}
+});
 
 ### code at top to pull stored events
 
