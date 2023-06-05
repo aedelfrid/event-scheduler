@@ -53,3 +53,80 @@ THEN the saved events persist
 ## Mock-up
 
 <img src='assets\images\05-third-party-apis-homework-demo.gif'>
+
+## Pseudocode
+
+var eventText = {
+    12am
+    1am
+    2am
+    3am
+    4am
+    5am
+    6am
+    7am
+    8am
+    9am: '';
+    10am: '';
+    11am: '';
+    12pm: '';
+    1pm: '';
+    2pm: '';
+    3pm: '';
+    4pm: '';
+    5pm: '';
+    6pm
+    7pm
+    8pm
+    9pm
+    10pm
+    11pm
+}
+
+### dayjs get day to display at top
+
+var today = dayjs()
+
+$('#currentDay').text = today.format('dddd/MMM/DD/YYYY')$
+
+### create 9AM-5PM time blocks
+### dayjs get time to colour time slots
+
+for (i=0; i > keys(eventText).length; i++) {
+    create time block with i % 12 || 12
+
+    if (hour >= 9 || hour <= 17) {
+        timeBlock = div, document create element -jqeury?
+        add attributes
+        timeShow = div appended under timeBlock
+        add attributes
+        timeSHow.text =`${today.format('hh A')}`
+        textArea = textarea appended under timeBlock
+        add attributes
+        textArea.text = eventText[i]
+        saveButton = button appended under timeBlock
+    }
+
+ //when adding full day functionality, code is in 24hr format, then possible to be converted to 12hr format in gui based on user option?
+    
+    if (hour > i) {
+        set block to colour grey
+    } else if (hour = i) {
+        set block colour red
+    } else if (hour < i) {
+        set block colour green
+    }
+}
+
+### create event listener for saving text in slots
+
+on.click.function(e) {
+    dialog.areYouSure?
+    e.parent().text.push.JSON
+}
+
+### code at top to pull stored events
+
+var eventTextStored = JSON.parse(localStorage.getItem('eventText'))
+
+### if I have time, which I won't. I'd like to make an option to plan future days, maybe a calendar?
