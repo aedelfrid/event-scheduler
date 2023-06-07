@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
 
   var eventText = {
     0: '',
@@ -30,13 +30,14 @@ $(function () {
   var dayLength = Object.keys(eventText).length;
   
   var timeBlockClasses = ['row', 'time-block'];
-  var timeShowClasses = ['col-2', 'col-md-1', 'hour', 'text-center', 'py-3']
-  var textAreaClasses = ['col-8', 'col-md-10', 'description']
-  var saveButtonClasses = ['btn', 'saveBtn', 'col-2', 'col-md-1']
-  var saveButtoniClasses = ['fas', 'fa-save']
+  var timeShowClasses = ['col-2', 'col-md-1', 'hour', 'text-center', 'py-3'];
+  var textAreaClasses = ['col-8', 'col-md-10', 'description'];
+  var saveButtonClasses = ['btn', 'saveBtn', 'col-2', 'col-md-1'];
+  var saveButtonIconClasses = ['fas', 'fa-save'];
   var today = dayjs();
 
   $('#currentDay').text(today.format('dddd - MMMM DD - YYYY'));
+  var currentHour = today.format('H')
 
   var eventTextStored = JSON.parse(localStorage.getItem('eventText'));
 
@@ -45,56 +46,60 @@ $(function () {
   };
 
   for (i=0; i < dayLength; i++) {
-    //create time block with i % 12 || 12
-
 
     if (i >= 9 && i <= 17) {
-      //timeBlock = div, document create element -jqeury?
       var timeBlock = document.createElement('div');
-      //add attributes
       $(timeBlock).attr('id', `hour-${i}`);
       $(timeBlock).addClass(timeBlockClasses);
-      //timeBlock appended under div 'container-lg'
       $('.container-lg').append(timeBlock);
-      //timeShow = div appended under timeBlock
+
+      if (currentHour > i) {
+        $(timeBlock).addClass('past');
+      } else if (currentHour == i) {
+        $(timeBlock).addClass('present');
+      } else if (currentHour < i) {
+        $(timeBlock).addClass('future');
+      }
+
       var timeShow = document.createElement('div');
-      //add attributes
-      //$(timeShow).attr()
       $(timeShow).addClass(timeShowClasses);
       timeShow.innerText = i % 12 || 12;
       $(timeBlock).append(timeShow);
-      // textArea = textarea appended under timeBlock
+
       var textArea = document.createElement('textarea')
-      // add attributes
       $(textArea).attr('rows', 3)
       $(textArea).addClass(textAreaClasses);
       $(timeBlock).append(textArea);
-      textArea.innertext = eventText[i]
-      //saveButton = button appended under timeBlock
+      textArea.value = eventText[i]
+
       var saveButton = document.createElement('button')
       $(saveButton).attr('aria-label', 'save')
       $(saveButton).addClass(saveButtonClasses);
       $(timeBlock).append(saveButton);
+      saveButton.addEventListener('click', saveEventHandler);
 
-      var saveButtoni = document.createElement('i')
-      $(saveButtoni).attr('aria-hidden', 'true')
-      $(saveButtoni).addClass(saveButtoniClasses);
-      $(saveButton).append(saveButtoni);
-        
+      var saveButtonIcon = document.createElement('i')
+      $(saveButtonIcon).attr('aria-hidden', 'true')
+      $(saveButtonIcon).addClass(saveButtonIconClasses);
+      $(saveButton).append(saveButtonIcon);
     };
 
- //when adding full day functionality, code is in 24hr format, then possible to be converted to 12hr format in gui based on user option?
+    //when adding full day functionality, 
+    //code is in 24hr format, 
+    //then possible to be converted to 12hr format in gui based on user option?
     
-    //if (hour > i) {
-        //set block to colour grey
-    //} else if (hour = i) {
-        //set block colour red
-    //} else if (hour < i) {
-        //set block colour green
-    //}
-  }
+  };
+
+  function saveEventHandler(e) {
+    var eventID = e.target.parentElement.firstChild.innerText;
+    var rawEventText = e.target.previousSibling.value;
+    if (rawEventText) {
+      eventText[eventID] = rawEventText
+
+      localStorage.setItem('eventText',JSON.stringify(eventText))
+    };
+  };
+
+  
 });
 
-function saveEventHandler(e) {
-
-};
