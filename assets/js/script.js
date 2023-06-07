@@ -49,7 +49,7 @@ $(function() {
 
     if (i >= 9 && i <= 17) {
       var timeBlock = document.createElement('div');
-      $(timeBlock).attr('id', `hour-${i}`);
+      $(timeBlock).attr('id', `${i}`);
       $(timeBlock).addClass(timeBlockClasses);
       $('.container-lg').append(timeBlock);
 
@@ -91,13 +91,12 @@ $(function() {
   };
 
   function saveEventHandler(e) {
-    var eventID = e.target.parentElement.firstChild.innerText;
+    var eventID = e.target.parentElement.getAttribute('id')
     var rawEventText = e.target.previousSibling.value;
-    if (rawEventText) {
-      eventText[eventID] = rawEventText
+    
+    eventText[eventID] = rawEventText
 
-      localStorage.setItem('eventText',JSON.stringify(eventText))
-    };
+    localStorage.setItem('eventText',JSON.stringify(eventText))
   };
 
   
